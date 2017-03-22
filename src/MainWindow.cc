@@ -42,7 +42,7 @@ MainWindow::MainWindow() :
   QMainWindow(nullptr),
   m_maxSize(10000),
   m_loggerEntryId(0),
-  m_logLevel(dqm4hep::core::Logger::TRACE)
+  m_logLevel(spdlog::level::trace)
 {
   m_loggerPtr = dqm4hep::core::Logger::createLogger("logger-gui", {dqm4hep::core::Logger::coloredConsole()});
   this->build();
@@ -111,12 +111,12 @@ void MainWindow::build()
   pToolBoxWidget->layout()->addWidget(pLevelLabel);
 
   m_pLogLevelBox = new QComboBox(this);
-  m_pLogLevelBox->addItem("trace", static_cast<int>(dqm4hep::core::Logger::TRACE));
-  m_pLogLevelBox->addItem("debug", static_cast<int>(dqm4hep::core::Logger::DEBUG));
-  m_pLogLevelBox->addItem("info", static_cast<int>(dqm4hep::core::Logger::INFO));
-  m_pLogLevelBox->addItem("warning", static_cast<int>(dqm4hep::core::Logger::WARN));
-  m_pLogLevelBox->addItem("error", static_cast<int>(dqm4hep::core::Logger::ERROR));
-  m_pLogLevelBox->addItem("critical", static_cast<int>(dqm4hep::core::Logger::CRITICAL));
+  m_pLogLevelBox->addItem("trace", static_cast<int>(spdlog::level::trace));
+  m_pLogLevelBox->addItem("debug", static_cast<int>(spdlog::level::debug));
+  m_pLogLevelBox->addItem("info", static_cast<int>(spdlog::level::info));
+  m_pLogLevelBox->addItem("warning", static_cast<int>(spdlog::level::warn));
+  m_pLogLevelBox->addItem("error", static_cast<int>(spdlog::level::err));
+  m_pLogLevelBox->addItem("critical", static_cast<int>(spdlog::level::critical));
   pToolBoxWidget->layout()->addWidget(m_pLogLevelBox);
   connect(m_pLogLevelBox, SIGNAL(currentIndexChanged(int)), this, SLOT(logLevelChanged(int)));
 
@@ -153,7 +153,7 @@ void MainWindow::receiveLoggerEntry(const std::string &entryStr)
   Json::Reader reader;
   Json::Value logEntry;
 
-  if(reader.parse(entryStr, logEntry))
+  if(!reader.parse(entryStr, logEntry))
   {
     dqm_logger_error(m_loggerPtr, "Invalid received log entry. Expected json string !");
     return;
@@ -254,33 +254,33 @@ QColor MainWindow::color(LogLevel level)
 
   switch(level)
   {
-    case dqm4hep::core::Logger::TRACE:
+    case spdlog::level::trace:
     {
       color.setNamedColor("#CED9FF");
       break;
     }
-    case dqm4hep::core::Logger::DEBUG:
+    case spdlog::level::debug:
     {
       color.setNamedColor("#92ACFF");
       break;
     }
-    case dqm4hep::core::Logger::WARN:
+    case spdlog::level::warn:
     {
       color.setNamedColor("#FFF864");
       break;
     }
-    case dqm4hep::core::Logger::ERROR:
+    case spdlog::level::err:
     {
       color.setNamedColor("#FF4040");
       break;
     }
-    case dqm4hep::core::Logger::CRITICAL:
+    case spdlog::level::critical:
     {
       color.setNamedColor("#FF4040");
       break;
     }
-    case dqm4hep::core::Logger::OFF:
-    case dqm4hep::core::Logger::INFO:
+    case spdlog::level::off:
+    case spdlog::level::info:
     default:
     {
       color.setNamedColor("#FFFFFF");
