@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/DQM4HEP/dqm4hep-qt-logging-gui.svg?branch=master)](https://travis-ci.org/DQM4HEP/git remote add origin https://github.com/DQM4HEP/dqm4hep-qt-logging-gui.git
-git push -u origin master)
+[![Build Status](https://travis-ci.org/DQM4HEP/dqm4hep-qt-logging-gui.svg?branch=master)](https://travis-ci.org/DQM4HEP/dqm4hep-qt-logging-gui)
 
 DQM4HEP - A Data Quality Monitoring for High Energy Physics
 
