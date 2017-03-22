@@ -46,6 +46,8 @@ MainWindow::MainWindow() :
 {
   m_loggerPtr = dqm4hep::core::Logger::createLogger("logger-gui", {dqm4hep::core::Logger::coloredConsole()});
   this->build();
+
+  setWindowTitle("DQM4HEP - Log collector");
 }
 
 //-------------------------------------------------------------------------------------------------
